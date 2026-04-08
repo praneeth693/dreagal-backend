@@ -11,8 +11,11 @@ const adminRoutes = require("./routes/adminRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 
 const app = express();
-
-app.use(cors());
+app.set("trust proxy",1);
+app.use(cors({
+  origin:"",
+  credentials:true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended:true}));
 
@@ -58,7 +61,14 @@ app.use("/api/cart", cartRoutes);
 app.get("/",(req,res)=>{
   res.send("Server Running");
 });
-const PORT=5000;
+mongoose.connect(process.env.MONGO_URI)
+.then(()=>{
+  console.log("Database Connected");
+})
+.catch((err)=>{
+  console.log("MongoDB Error:",err);
+});
+const PORT=process.env.PORT||5000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
