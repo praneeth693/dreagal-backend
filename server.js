@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 const Razorpay=require("razorpay");
+const nodemailer=require("nodemailer");
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const adminRoutes = require("./routes/adminRoutes");
@@ -13,7 +14,7 @@ const cartRoutes = require("./routes/cartRoutes");
 const app = express();
 app.set("trust proxy",1);
 app.use(cors({
-  origin:"",
+  origin:"*",
   credentials:true
 }));
 app.use(express.json());
@@ -23,6 +24,32 @@ const razorpay=new Razorpay({
   key_id:"rzp_test_SYDb9gIxkE4TDc",
   key_secret:"4EK21TaLTP83LJzjb6ViIN6k",
 });
+
+const sendMail=async(order)=>{
+  try{
+    const testAccount=await nodemailer.createTestAccount();
+    const transporter=nodemailer.createTransport({
+     host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'tristin.douglas85@ethereal.email',
+        pass: 'NWgkyTxMhh2yrRR5we'
+    },
+    });
+    const info=await transporter.sendMail({
+      from: '"ashith" <ashith@example.com>',
+        to: order.customer.email,
+        subject: "order comfirmatipn",
+        text: `Hello ${order.customer.name},
+        your order placed successfullu!
+        
+        Total:${order.total}`,
+    });
+    console.log("preview URl:",nodemailer.getTestMessageUrl(info));
+  }catch(error){
+    console.log(error);
+  }
+};
 app.post("/create-order",async(req,res)=>{
   try{
     const{amount}=req.body;
@@ -61,13 +88,13 @@ app.use("/api/cart", cartRoutes);
 app.get("/",(req,res)=>{
   res.send("Server Running");
 });
-mongoose.connect(process.env.MONGO_URI)
-.then(()=>{
-  console.log("Database Connected");
-})
-.catch((err)=>{
-  console.log("MongoDB Error:",err);
-});
+// mongoose.connect(process.env.MONGO_URI)
+// .then(()=>{
+//   console.log("Database Connected");
+// })
+// .catch((err)=>{
+//   console.log("MongoDB Error:",err);
+// });
 const PORT=process.env.PORT||5000;
 
 app.listen(PORT, () => {
