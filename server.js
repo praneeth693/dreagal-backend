@@ -15,7 +15,10 @@ const app = express();
 
 app.set("trust proxy", 1);
 
-app.use(cors());
+app.use(cors({
+  origin: "https://dregal-frontend.vercel.app",
+  credentials: true
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
