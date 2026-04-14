@@ -80,7 +80,7 @@ app.post("/place-order", async (req, res) => {
   try {
     const order = req.body;
 
-    await sendMail(order);
+   sendMail(order);
 
     res.json({ message: "Order placed & mail sent" });
   } catch (error) {
