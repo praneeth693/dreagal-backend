@@ -36,7 +36,7 @@ const sendMail = async (order) => {
 
   await resend.emails.send({
       from: "onboarding@resend.dev",
-      to: order.customer.email,
+      to: "rpraneeth108@gmail.com",
       subject: "Order Confirmation",
       text: `Hello ${order.customer.name},
 
