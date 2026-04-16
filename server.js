@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 const Razorpay = require("razorpay");
-const nodemailer = require("nodemailer");
-
+const {Resend}=require("resend");
+const resend=new Resend(process.env.RESEBD_API_KEY);
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const adminRoutes = require("./routes/adminRoutes");
@@ -32,18 +32,10 @@ const razorpay = new Razorpay({
 
 const sendMail = async (order) => {
   try {
-    const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+   
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+  await resend.emails.send({
+      from: "onboarding@resend.dev",
       to: order.customer.email,
       subject: "Order Confirmation",
       text: `Hello ${order.customer.name},
