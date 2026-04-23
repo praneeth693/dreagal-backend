@@ -10,7 +10,7 @@ const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const cartRoutes = require("./routes/cartRoutes");
-const sendBillmail=require("./mail");
+const sendBillEmail=require("./mail");
 
 const app = express();
 
@@ -55,7 +55,7 @@ app.post("/place-order", async (req, res) => {
   try {
     const order = req.body;
 
-   await sendBillMail(order);
+   await sendBillEMail(order);
 
     res.json({ message: "Order placed & mail sent" });
   } catch (error) {

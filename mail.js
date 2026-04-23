@@ -3,7 +3,7 @@ const {jsPDF}=require("jspdf");
 const {Resend}=require("resend");
 const resend=new
 Resend(process.env.RESEND_API_KEY);
-const sendBillmail=async (order)=>{
+const sendBillEmail=async (order)=>{
     try{
  const doc = new jsPDF();
 
@@ -64,4 +64,4 @@ console.log("Email Sent Successfully")
 
     }
 };
-module.exports=sendBillmail;
+module.exports=sendBillEmail;
