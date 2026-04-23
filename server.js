@@ -5,12 +5,14 @@ const cors = require("cors");
 const path = require("path");
 const Razorpay = require("razorpay");
 const {Resend}=require("resend");
+const {jspdf} =require("jspdf")
 const resend=new Resend(process.env.RESEBD_API_KEY);
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const sendBillmail=require("./mail");
+
 const app = express();
 
 app.set("trust proxy", 1);
