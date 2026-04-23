@@ -38,20 +38,20 @@ let subtotal=0;
   doc.text(`Total:${finalTotal}`,20,y+30);
 
   const pdfBase64=doc.output("datauristring");
-await Resend.emails.send({
+await resend.emails.send({
     from: "onboarding@resend.dev",
       to: order.customer.email,
       subject: "Order Confirmation",
       html:`
       <h2>order confirmed</h2>
       <p>Your order has been placed successfully.</p>
-      <p>GST invoice is attachedwith this email.</p>
+      <p>GST invoice is attached with this email.</p>
 
       `,
       attachments:[
         {
             filename:"GST_invoice.pdf",
-            content:pdfBase64.split(" ,")[1],
+            content:pdfBase64.split(",")[1],
         },
       ],
 });
