@@ -4,9 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 const Razorpay = require("razorpay");
-const {Resend}=require("resend");
-const {jspdf} =require("jspdf")
-const resend=new Resend(process.env.RESEBD_API_KEY);
+
+
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const adminRoutes = require("./routes/adminRoutes");
@@ -32,25 +31,7 @@ const razorpay = new Razorpay({
   key_secret: "4EK21TaLTP83LJzjb6ViIN6k",
 });
 
-const sendMail = async (order) => {
-  try {
-   
 
-  await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: "rpraneeth108@gmail.com",
-      subject: "Order Confirmation",
-      text: `Hello ${order.customer.name},
-
-Your order placed successfully!
-Total: ₹${order.total}`,
-    });
-
-    console.log("Mail sent");
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 app.post("/create-order", async (req, res) => {
   try {

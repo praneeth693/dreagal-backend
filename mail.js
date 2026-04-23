@@ -1,6 +1,8 @@
-const {Resend}=require("resend");
-import jsPDF from "jspdf";
 
+const {jsPDF}=require("jspdf");
+const {Resend}=require("resend");
+const resend=new
+Resend(process.env.RESEND_API_KEY);
 const sendBillmail=async (order)=>{
     try{
  const doc = new jsPDF();
