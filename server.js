@@ -10,7 +10,7 @@ const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const cartRoutes = require("./routes/cartRoutes");
-
+const sendBillmail=require("./mail");
 const app = express();
 
 app.set("trust proxy", 1);
@@ -72,7 +72,7 @@ app.post("/place-order", async (req, res) => {
   try {
     const order = req.body;
 
-   sendMail(order);
+   await sendBillEMail(order);
 
     res.json({ message: "Order placed & mail sent" });
   } catch (error) {
