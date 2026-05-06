@@ -53,14 +53,28 @@ app.post("/create-order", async (req, res) => {
 
 app.post("/place-order", async (req, res) => {
   try {
-    const order = req.body;
+    const orderData = req.body;
 
-   await sendBillEmail(order);
+    const newOrder = new Order({
+      customer: {
+        _id: orderData.customer._id,   
+        name: orderData.customer.name,
+        email: orderData.customer.email,
+      },
+      items: orderData.items,
+      total: orderData.total,
+      status: "Completed",
+    });
 
-    res.json({ message: "Order placed & mail sent" });
+    await newOrder.save();
+
+    await sendBillEmail(newOrder);
+
+    res.json({ message: "Order placed successfully" });
+
   } catch (error) {
     console.log(error);
-    res.status(500).send("Error");
+    res.status(500).json({ message: "Error placing order" });
   }
 });
 
@@ -97,7 +111,9 @@ app.get("/api/orders/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    const orders = await Order.find({ "customer._id": userId });
+    const orders = await Order.find({
+      "customer._id": userId
+    });
 
     res.json(orders);
   } catch (error) {
