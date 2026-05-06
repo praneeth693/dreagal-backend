@@ -93,3 +93,15 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+app.get("/api/orders/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const orders = await Order.find({ "customer._id": userId });
+
+    res.json(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error fetching orders" });
+  }
+});

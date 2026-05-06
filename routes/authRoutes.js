@@ -10,9 +10,6 @@ function generateOTP(){
 router.post("/send-otp",async(req,res)=>{
     try{
         const{mobile}=req.body;
-        // if(!mobile){
-        //     return res.status(400).json({message:"Mobile Number required"});
-        // }
         
         let user=await User.findOne({mobile});
 

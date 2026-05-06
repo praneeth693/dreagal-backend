@@ -58,9 +58,7 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", upload.single("image"),async (req, res) => {
   try {
-
-      
-    console.log("Body:", req.body);
+console.log("Body:", req.body);
     console.log("FILE:",req.file);
     const updatedData=
       {
@@ -78,14 +76,7 @@ router.put("/:id", upload.single("image"),async (req, res) => {
       { returnDocument: "after" }
 
     );
-
-
-
-
-     
-  
-
-    res.json(updatedProduct);
+res.json(updatedProduct);
 
   } catch (error) {
     console.log(error);
