@@ -33,8 +33,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Razorpay
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_SECRET,
+  key_id:"rzp_test_SYDb9gIxkE4TDc",
+  key_secret: "4EK21TaLTP83LJzjb6ViIN6k",
 });
 
 // Create Razorpay Order
